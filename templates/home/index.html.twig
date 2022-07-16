@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trick index{% endblock %}
+
+{% block body %}
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <h1 class="masthead-heading text-uppercase mb-0">PLATEFORME SNOWTRICKS</h1>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            {% if app.user %}
+            <a href="{{ path('app_trick_new') }}" class="btn btn-secondary"><i class="fa fa-plus"></i> Nouveau trick</a>
+            {% endif %}
+        </div>
+    </header>
+    <section class="page-section portfolio mt-4" id="portfolio">
+        <div class="container">
+                        <h2 class="titre text-center">Les Tricks</h2>
+
+            <div class="row">
+                {% for trick in tricks %}
+                    <div class="col-lg-4 md-4">
+                        <div class="card mt-3 mb-3">
+                           
+                            {% if trick.images|length > 0 %}
+                            <img height="200" class="card-img-top" src="{{'uploads/'~trick.images[0].name}}" alt="Card image cap">
+                            {% endif %}
+                            <div class="card-body mt-5 mb-5">
+                                <h5 class="card-title">{{ trick.title }}</h5>
+                                {% if app.user %}
+                                <a href="{{ path('app_trick_edit', {'id': trick.id}) }}" class="btn btn-primary">Editer</a>
+                                {% endif %}
+                                <a href="{{ path('app_trick_show', {'id': trick.id, slug:trick.slug}) }}" class="btn btn-primary">Voir</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

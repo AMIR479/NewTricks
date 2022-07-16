@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Trick{% endblock %}
+
+{% block body %}
+    <section class="page-section portfolio mt-4" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mx-auto bg-white p-3">
+                    <h1>Editer un trick</h1>
+                    {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        window.onload = () => {
+            let links = document.querySelectorAll("[data-delete]")
+            for(link of links){
+                link.addEventListener("click", function(e){
+                    e.preventDefault()
+                    if(confirm("Voulez-vous supprimer cette image ?")){
+                        fetch(this.getAttribute("href"), {
+                            method: "DELETE",
+                            headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({"_token": this.dataset.token})
+                        }).then(
+                            response => response.json()
+                        ).then(data => {
+                            if(data.success)
+                                this.parentElement.remove()
+                            else
+                                alert(data.error)
+                        }).catch(e => alert(e))
+                    }
+                })
+            }
+        }
+    </script>
+     <script src="{{asset('js/addition.js')}}"> </script>
+{% endblock %}

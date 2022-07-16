@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Groupe{% endblock %}
+
+{% block body %}
+<div class="container mt-5 mb-1">
+ <h1 class="group mb-0 mt-5">Create new Groupe</h1>
+
+    {{ include('groupe/_form.html.twig') }}
+
+    <a href="{{ path('app_groupe_index') }}">back to list</a>
+ </div>   
+{% endblock %}
+
+   

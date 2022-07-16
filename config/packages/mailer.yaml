@@ -1,3 +1,5 @@
+# config/packages/dev/mailer.yaml
 framework:
     mailer:
-        dsn: '%env(MAILER_DSN)%'
+        envelope:
+            recipients: ['sarr.amir@gmail.com']

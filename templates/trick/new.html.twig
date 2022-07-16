@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Trick{% endblock %}
+
+{% block body %}
+<section class="page-section portfolio mt-4" id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto bg-white p-3">
+                <h1>Créer un nouveau trick</h1>
+                {{ include('trick/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</section>
+  {% endblock %}

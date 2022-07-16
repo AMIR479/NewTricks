@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<section class="page-section portfolio mt-4" id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto bg-white p-3">
+    <h1>Inscription</h1>
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email, { 'attr': {'class': 'form-control'} }) }}
+                <div>
+                    <label for="">Prénom</label>
+                    {{ form_widget(registrationForm.firstName, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div>
+                    <label for="">Mom</label>
+                    {{ form_widget(registrationForm.lastName, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div>
+                    <label for="">Mot de passe</label>
+                    {{ form_widget(registrationForm.plainPassword, { 'attr': {'class': 'form-control'} } , {
+                        label: 'Password'
+                    }) }}
+                </div>
+
+                {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn btn-secondary mt-3">S'inscrire</button>
+    {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

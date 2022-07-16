@@ -1,0 +1,107 @@
+{{ form_start(form) }}
+    <div class="form-group">
+        <label for="">Titre</label>
+        {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group">
+        <label for="">Groupe</label>
+        {{ form_widget(form.groupe, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group mt-3">
+        <label for="">Description</label>
+        {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group mt-3">
+        <label for="">Ajouter une ou plusieurs images</label>
+        {{ form_widget(form.images, { 'attr': {'class': 'form-control'} }) }}
+        {% if app.request.attributes.get('_route') == 'app_trick_edit' %}
+            <h2>Images</h2>
+            {% for image in trick.images %}
+                <div>
+                    <img src="{{ asset('/uploads/'~image.name) }}" alt="" width="50">
+                    <a href="{{ path('tricks_delete_image', {id: image.id})}}" data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer</a>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <h3 class="vid mt-3 text-center">Videos</h3>
+    <ul class="videos" 
+    data-index="0"
+    data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+       
+    </ul>
+     <button type="button" class="add_item_link" data-collection-holder-class="videos">Ajouter une vidéo</button>
+    <div class="mt-3">
+        <button class="btn btn-secondary">Enregistrer</button>
+    </div>
+{{ form_end(form) }}
+<script>
+
+        window.onload = () => {
+
+    const addTagFormDeleteLink = (item) => {
+    const removeFormButton = document.createElement('button');
+    removeFormButton.innerText = 'Delete this tag';
+
+    item.append(removeFormButton);
+
+    removeFormButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        // remove the li for the tag form
+        item.remove();
+    });
+}        
+
+    const addFormToCollection = (e) => {
+        const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+        const item = document.createElement('li');
+
+        item.innerHTML = collectionHolder
+            .dataset
+            .prototype
+            .replace(
+            /__name__/g,
+            collectionHolder.dataset.index
+            );
+
+  collectionHolder.appendChild(item);
+
+  collectionHolder.dataset.index++;
+
+  addTagFormDeleteLink(item);
+};
+    
+    document.querySelectorAll('.add_item_link')
+    .forEach(btn => {
+        btn.addEventListener("click", addFormToCollection)
+    });
+
+   
+    }
+
+    document
+    .querySelectorAll('ul.videos li')
+    .forEach((video) => {
+        addVideoFormDeleteLink(video);
+    })
+
+// ... the rest of the block from above
+
+// const addFormToCollection = (e) => {
+//     // ...
+
+//     // add a delete link to the new form
+//     const addTagFormDeleteLink = (item) => {
+//     const removeFormButton = document.createElement('button');
+//     removeFormButton.innerText = 'Delete this video';
+
+//     item.append(removeFormButton);
+
+//     removeFormButton.addEventListener('click', (e) => {
+//         e.preventDefault();
+//         // remove the li for the video form
+//         item.remove();
+//     });
+//  }
+// } 
+</script>
